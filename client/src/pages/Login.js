@@ -1,35 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-  const { email, password } = formData;
-  const { login, error, clearError, user } = useAuth();
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // If user is already logged in, redirect to home
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
-
-  const onChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const onSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    clearError();
-    
-    const success = await login({ email, password });
-    if (success) {
+    setError('');
+    setLoading(true);
+
+    try {
+      await login(formData.email, formData.password);
       navigate('/');
+    } catch (err) {
+      setError(err.message || 'Failed to login');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,82 +40,62 @@ const Login = () => {
       <div className="auth-content">
         <div className="auth-form-container">
           <div className="auth-tabs">
-            <Link to="/login" className="auth-tab active">Đăng nhập</Link>
-            <Link to="/register" className="auth-tab">Đăng ký</Link>
+            <Link to="/login" className="auth-tab active">Login</Link>
+            <Link to="/register" className="auth-tab">Register</Link>
           </div>
           <div className="auth-form-content">
-            <h2>Đăng nhập</h2>
-            <p className="auth-subtitle">Đăng nhập để khám phá quà tặng phù hợp.</p>
-            
-            {error && (
-              <div className="alert alert-danger">
-                {error}
-              </div>
-            )}
-            
-            <form onSubmit={onSubmit}>
+            <h2>Welcome Back</h2>
+            <p className="auth-subtitle">Please sign in to continue</p>
+
+            {error && <div className="alert alert-danger">{error}</div>}
+
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="email" className="form-label">Email</label>
+                <label className="form-label">Email</label>
                 <input
                   type="email"
-                  className="form-control"
-                  id="email"
                   name="email"
-                  value={email}
-                  onChange={onChange}
-                  placeholder="Nhập email của bạn"
+                  className="form-control"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                 />
               </div>
-              
+
               <div className="form-group">
-                <label htmlFor="password" className="form-label">Mật khẩu</label>
+                <label className="form-label">Password</label>
                 <input
                   type="password"
-                  className="form-control"
-                  id="password"
                   name="password"
-                  value={password}
-                  onChange={onChange}
-                  placeholder="Nhập mật khẩu của bạn"
+                  className="form-control"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
                 />
               </div>
-              
-              <div className="form-group">
-                <div className="flex justify-between">
-                  <div className="checkbox-group">
-                    <input
-                      type="checkbox"
-                      id="remember"
-                      name="remember"
-                    />
-                    <label htmlFor="remember">Ghi nhớ đăng nhập</label>
-                  </div>
-                  <a href="#!" className="forgot-password">Quên mật khẩu?</a>
-                </div>
+
+              <div className="checkbox-group mb-3">
+                <input type="checkbox" id="remember" />
+                <label htmlFor="remember">
+                  Remember me
+                </label>
               </div>
-              
-              <button type="submit" className="btn w-full">ĐĂNG NHẬP</button>
+
+              <button 
+                type="submit" 
+                className="btn w-full" 
+                disabled={loading}
+              >
+                {loading ? 'Logging in...' : 'Login'}
+              </button>
             </form>
-            
-            <div className="social-auth">
-              <p>Hoặc đăng nhập với</p>
-              <div className="social-buttons">
-                <button className="social-btn google">
-                  <i className="fab fa-google"></i>
-                  Tiếp tục với Google
-                </button>
-                <button className="social-btn facebook">
-                  <i className="fab fa-facebook-f"></i>
-                  Tiếp tục với Facebook
-                </button>
-              </div>
-            </div>
           </div>
         </div>
+
         <div className="auth-image">
           <div className="auth-image-content">
-            <h1>Khám phá món quà hoàn hảo</h1>
-            <p>Dựa trên tính cách của bạn</p>
+            <h1>Find Perfect Gifts</h1>
+            <p>Discover personalized gift recommendations based on personality types</p>
           </div>
         </div>
       </div>

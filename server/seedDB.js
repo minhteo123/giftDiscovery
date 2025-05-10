@@ -4,7 +4,7 @@ const Gift = require('./models/Gift');
 
 dotenv.config();
 
-// Sample gift data
+
 const giftData = [
   {
     name: 'Wireless Headphones',

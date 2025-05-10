@@ -1,51 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { register } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
-  const [formError, setFormError] = useState('');
-  const { register, error, clearError, user } = useAuth();
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // If user is already logged in, redirect to home
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
-
-  const { name, email, password, confirmPassword } = formData;
-
-  const onChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const onSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    clearError();
-    
-    // Validate form
-    if (!name || !email || !password || !confirmPassword) {
-      setFormError('Please fill in all fields');
+    setError('');
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
       return;
     }
-    
-    if (password !== confirmPassword) {
-      setFormError('Passwords do not match');
-      return;
-    }
-    
-    // Register user
-    const success = await register({ name, email, password });
-    if (success) {
+
+    setLoading(true);
+    try {
+      await register(formData.name, formData.email, formData.password);
       navigate('/');
+    } catch (err) {
+      setError(err.message || 'Failed to create an account');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,108 +47,88 @@ const Register = () => {
       <div className="auth-content">
         <div className="auth-form-container">
           <div className="auth-tabs">
-            <Link to="/login" className="auth-tab">Đăng nhập</Link>
-            <Link to="/register" className="auth-tab active">Đăng ký</Link>
+            <Link to="/login" className="auth-tab">Login</Link>
+            <Link to="/register" className="auth-tab active">Register</Link>
           </div>
           <div className="auth-form-content">
-            <h2>Đăng ký</h2>
-            <p className="auth-subtitle">Tạo tài khoản để khám phá quà tặng phù hợp.</p>
-            
-            {(formError || error) && (
-              <div className="alert alert-danger">
-                {formError || error}
-              </div>
-            )}
-            
-            <form onSubmit={onSubmit}>
+            <h2>Create Account</h2>
+            <p className="auth-subtitle">Join us to discover perfect gifts</p>
+
+            {error && <div className="alert alert-danger">{error}</div>}
+
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="name" className="form-label">Họ và Tên</label>
+                <label className="form-label">Full Name</label>
                 <input
                   type="text"
-                  className="form-control"
-                  id="name"
                   name="name"
-                  value={name}
-                  onChange={onChange}
-                  placeholder="Nhập họ và tên của bạn"
+                  className="form-control"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                 />
               </div>
-              
+
               <div className="form-group">
-                <label htmlFor="email" className="form-label">Email</label>
+                <label className="form-label">Email</label>
                 <input
                   type="email"
-                  className="form-control"
-                  id="email"
                   name="email"
-                  value={email}
-                  onChange={onChange}
-                  placeholder="Nhập email của bạn"
+                  className="form-control"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                 />
               </div>
-              
+
               <div className="form-group">
-                <label htmlFor="password" className="form-label">Mật khẩu</label>
+                <label className="form-label">Password</label>
                 <input
                   type="password"
-                  className="form-control"
-                  id="password"
                   name="password"
-                  value={password}
-                  onChange={onChange}
-                  placeholder="Nhập mật khẩu của bạn"
+                  className="form-control"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  minLength={6}
                 />
               </div>
-              
+
               <div className="form-group">
-                <label htmlFor="confirmPassword" className="form-label">Xác nhận mật khẩu</label>
+                <label className="form-label">Confirm Password</label>
                 <input
                   type="password"
-                  className="form-control"
-                  id="confirmPassword"
                   name="confirmPassword"
-                  value={confirmPassword}
-                  onChange={onChange}
-                  placeholder="Nhập lại mật khẩu của bạn"
+                  className="form-control"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  minLength={6}
                 />
               </div>
-              
-              <div className="form-group">
-                <div className="checkbox-group">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    name="terms"
-                    required
-                  />
-                  <label htmlFor="terms">
-                    Tôi đồng ý với <a href="#!">Điều khoản dịch vụ</a> và <a href="#!">Chính sách bảo mật</a>
-                  </label>
-                </div>
+
+              <div className="checkbox-group mb-3">
+                <input type="checkbox" id="terms" required />
+                <label htmlFor="terms">
+                  I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
+                </label>
               </div>
-              
-              <button type="submit" className="btn w-full">ĐĂNG KÝ</button>
+
+              <button 
+                type="submit" 
+                className="btn w-full" 
+                disabled={loading}
+              >
+                {loading ? 'Creating Account...' : 'Create Account'}
+              </button>
             </form>
-            
-            <div className="social-auth">
-              <p>Hoặc đăng ký với</p>
-              <div className="social-buttons">
-                <button className="social-btn google">
-                  <i className="fab fa-google"></i>
-                  Tiếp tục với Google
-                </button>
-                <button className="social-btn facebook">
-                  <i className="fab fa-facebook-f"></i>
-                  Tiếp tục với Facebook
-                </button>
-              </div>
-            </div>
           </div>
         </div>
+
         <div className="auth-image">
           <div className="auth-image-content">
-            <h1>Khám phá món quà hoàn hảo</h1>
-            <p>Dựa trên tính cách của bạn</p>
+            <h1>Find Perfect Gifts</h1>
+            <p>Discover personalized gift recommendations based on personality types</p>
           </div>
         </div>
       </div>

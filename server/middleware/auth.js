@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // Use mock data for demonstration
-const useMockData = true;
+const useMockData = false;
 
 // Mock user for demonstration
 const mockUser = {

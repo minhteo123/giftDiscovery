@@ -3,7 +3,6 @@ const router = express.Router();
 const giftController = require('../controllers/giftController');
 const auth = require('../middleware/auth');
 
-// Mock data for gifts (to use when DB is not available)
 const mockGifts = [
   {
     _id: '60d21b4967d0d8992e610c85',

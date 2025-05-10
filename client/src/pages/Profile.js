@@ -76,7 +76,6 @@ const Profile = () => {
                 </div>
                 
                 <div className="form-group">
-                  <button type="button" className="btn">Cập nhật thông tin</button>
                 </div>
               </form>
             </div>

@@ -1,157 +1,359 @@
+/* General styles */
 .home-container {
-  min-height: calc(100vh - 70px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.hero-section {
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-  color: white;
-  padding: 60px 0;
+h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
+/* Hero section */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0 4rem;
+  gap: 2rem;
+}
+
 .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
+  flex: 1;
 }
 
 .hero-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
+  font-size: 2.8rem;
+  color: #2a2a2a;
+  margin-bottom: 1.2rem;
+  line-height: 1.2;
 }
 
 .hero-content p {
   font-size: 1.2rem;
-  margin-bottom: 30px;
-  opacity: 0.9;
+  color: #555;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.primary-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: #8B5CF6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  background-color: #7C3AED;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: transparent;
+  color: #8B5CF6;
+  border: 2px solid #8B5CF6;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+  background-color: #EDE9FE;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* How it works section */
+.how-it-works {
+  padding: 4rem 0;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 4rem;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.step {
+  flex: 1;
+  min-width: 250px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-5px);
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background-color: #8B5CF6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 auto 1rem;
+}
+
+.step h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.step p {
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Gift search section */
+.gift-search-section {
+  margin-bottom: 4rem;
 }
 
 .search-form {
   display: flex;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
 }
 
-.search-form input {
+.search-input {
   flex: 1;
-  padding: 15px;
-  border: none;
+  padding: 0.8rem 1rem;
+  border: 2px solid #ddd;
+  border-right: none;
   border-radius: 4px 0 0 4px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
-.search-form button {
+.search-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: #8B5CF6;
+  color: white;
+  border: none;
   border-radius: 0 4px 4px 0;
-  padding: 15px 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.categories-section {
-  padding: 40px 0;
-  background-color: white;
+.search-btn:hover {
+  background-color: #7C3AED;
 }
 
-.categories-section h2 {
-  margin-bottom: 20px;
-  color: #1f2937;
-  font-size: 1.8rem;
-}
-
-.categories-list {
+.categories {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
 }
 
-.category-item {
-  padding: 8px 16px;
-  background-color: #f3f4f6;
+.category-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: #f0f0f0;
+  color: #555;
   border: none;
-  border-radius: 20px;
+  border-radius: 30px;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s;
-  font-size: 14px;
-  color: #4b5563;
+  transition: all 0.3s ease;
 }
 
-.category-item:hover {
-  background-color: #e5e7eb;
+.category-btn:hover {
+  background-color: #e0e0e0;
 }
 
-.category-item.active {
-  background-color: #7c3aed;
+.category-btn.active {
+  background-color: #8B5CF6;
   color: white;
-}
-
-.gifts-section {
-  padding: 40px 0;
-  background-color: #f9fafb;
-}
-
-.gifts-section h2 {
-  margin-bottom: 30px;
-  color: #1f2937;
-  font-size: 1.8rem;
 }
 
 .gifts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
 }
 
 .gift-card {
   background-color: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gift-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.gift-image {
-  height: 200px;
-  overflow: hidden;
-}
-
-.gift-image img {
+.gift-card img {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.gift-card:hover .gift-image img {
-  transform: scale(1.05);
 }
 
 .gift-info {
-  padding: 20px;
+  padding: 1.5rem;
 }
 
 .gift-info h3 {
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  color: #1f2937;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
 }
 
-.gift-price {
+.price {
+  font-size: 1.3rem;
   font-weight: bold;
-  color: #7c3aed;
-  margin-bottom: 8px;
+  color: #8B5CF6;
+  margin-bottom: 1rem;
 }
 
-.gift-category {
-  font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 15px;
+.view-btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #8B5CF6;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
-.gift-info .btn {
-  width: 100%;
-  margin-top: 10px;
+.view-btn:hover {
+  background-color: #7C3AED;
+}
+
+.no-gifts {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Personality types section */
+.personality-types-section {
+  padding: 4rem 0;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 4rem;
+}
+
+.personality-types-section > p {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.personality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.personality-group {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.personality-group h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.types {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.type-card {
+  background-color: #EDE9FE;
+  color: #6D28D9;
+  padding: 0.8rem;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.type-card:hover {
+  background-color: #8B5CF6;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  
+  .steps-container {
+    flex-direction: column;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  
+  .personality-grid {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+    margin: 0 auto;
+  }
 } 

@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const jwt = require('jsonwebtoken');
 
 // Use mock data for demonstration
-const useMockData = true;
+const useMockData = false;
 
 // Mock user for demonstration
 const mockUser = {
